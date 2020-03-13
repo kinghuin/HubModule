@@ -13,8 +13,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import argparse
+import ast
+
 import paddlehub as hub
+
+# yapf: disable
+parser = argparse.ArgumentParser(__doc__)
+parser.add_argument("--use_gpu", type=ast.literal_eval, default=True, help="Whether use GPU for finetuning, input should be True or False")
+parser.add_argument("--batch_size", type=int, default=25, help="Total examples' number in batch for training.")
+args = parser.parse_args()
+# yapf: enable.
 
 module = hub.Module(name="bert_cased_L-12_H-768_A-12")
 
-print(module.get_embedding(texts=[["床前明月光", "疑是地上霜"], ["举头望明月"]]))
+module.get_embedding(texts=[["床前明月光", "疑是地上霜"], ["举头望明月"]])

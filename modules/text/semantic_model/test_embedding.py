@@ -54,7 +54,7 @@ with open("qps.txt", "w") as fout:
         else:
             batch_sizes = [1, 8, 16]
 
-        for use_gpu in [False, True]:
+        for use_gpu in [True]:
             for batch_size in batch_sizes:
                 start = time.time()
                 module.get_embedding(

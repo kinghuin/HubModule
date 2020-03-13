@@ -1,3 +1,5 @@
+cd .
+
 project_path=$PWD
 rawname=${project_path##*/}
 name=${rawname//L_12_H_768_A_12/L-12_H-768_A-12}

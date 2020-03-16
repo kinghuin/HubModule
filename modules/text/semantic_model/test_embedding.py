@@ -38,6 +38,16 @@ with open("qps.txt", "w") as fout:
             "roberta_wwm_ext_chinese_L_24_H_1024_A_16",
             "roberta_wwm_ext_chinese_L_24_H_1024_A_16_distillation"
     ]:
+        if name not in [
+                "bert_cased_L_24_H_1024_A_16",
+                "bert_multi_uncased_L_12_H_768_A_12",
+                "roberta_wwm_ext_chinese_L_12_H_768_A_12_distillation",
+                "roberta_wwm_ext_chinese_L_24_H_1024_A_16_distillation"
+        ]:
+            tmp = hub.Module(
+                name=name.replace("L_12_H_768_A_12", "L-12_H-768_A-12").replace(
+                    "L_24_H_1024_A_16", "L-24_H-1024_A-16"))
+
         os.system("bash %s/download.sh %s" % (name, name))
         module = hub.Module(
             name=name.replace("L_12_H_768_A_12", "L-12_H-768_A-12").replace(

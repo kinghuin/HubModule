@@ -1,5 +1,5 @@
 name: ernie_tiny
-dir: "modules/text/lexical_analysis/ernie_tiny"
+dir: "modules/text/semantic_model/ernie_tiny"
 exclude:
   - README.md
   - test_context.py

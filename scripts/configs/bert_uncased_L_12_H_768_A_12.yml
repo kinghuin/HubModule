@@ -1,5 +1,5 @@
 name: bert_uncased_L_12_H_768_A_12
-dir: "modules/text/lexical_analysis/bert_uncased_L_12_H_768_A_12"
+dir: "modules/text/semantic_model/bert_uncased_L_12_H_768_A_12"
 exclude:
   - README.md
   - test_context.py

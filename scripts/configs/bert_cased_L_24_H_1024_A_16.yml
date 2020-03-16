@@ -1,5 +1,5 @@
 name: bert_cased_L_24_H_1024_A_16
-dir: "modules/text/lexical_analysis/bert_cased_L_24_H_1024_A_16"
+dir: "modules/text/semantic_model/bert_cased_L_24_H_1024_A_16"
 exclude:
   - README.md
   - test_context.py

@@ -1,5 +1,5 @@
 name: ernie_v2_eng_base
-dir: "modules/text/lexical_analysis/ernie_v2_eng_base"
+dir: "modules/text/semantic_model/ernie_v2_eng_base"
 exclude:
   - README.md
   - test_context.py

@@ -1,5 +1,5 @@
 name: roberta_wwm_ext_chinese_L_12_H_768_A_12_distillation
-dir: "modules/text/lexical_analysis/roberta_wwm_ext_chinese_L_12_H_768_A_12_distillation"
+dir: "modules/text/semantic_model/roberta_wwm_ext_chinese_L_12_H_768_A_12_distillation"
 exclude:
   - README.md
   - test_context.py

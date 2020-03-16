@@ -39,7 +39,15 @@ with open("qps.txt", "w") as fout:
             "roberta_wwm_ext_chinese_L_24_H_1024_A_16_distillation"
     ]:
         os.system("bash %s/download.sh %s" % (name, name))
-
+        if name not in [
+                "bert_cased_L_12_H_768_A_12", "bert_cased_L_24_H_1024_A_16",
+                "ernie", "ernie_tiny", "ernie_v2_eng_base",
+                "ernie_v2_eng_large", "roberta_wwm_ext_chinese_L_12_H_768_A_12",
+                "roberta_wwm_ext_chinese_L_12_H_768_A_12_distillation",
+                "roberta_wwm_ext_chinese_L_24_H_1024_A_16",
+                "roberta_wwm_ext_chinese_L_24_H_1024_A_16_distillation"
+        ]:
+            continue
         module = hub.Module(
             name=name.replace("L_12_H_768_A_12", "L-12_H-768_A-12").replace(
                 "L_24_H_1024_A_16", "L-24_H-1024_A-16"))
@@ -56,6 +64,7 @@ with open("qps.txt", "w") as fout:
 
         for use_gpu in [True]:
             for batch_size in batch_sizes:
+                module.get_embedding(texts=[["hello"]], use_gpu=True)
                 start = time.time()
                 module.get_embedding(
                     texts=texts, use_gpu=use_gpu, batch_size=batch_size)

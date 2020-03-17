@@ -149,13 +149,16 @@ if __name__ == '__main__':
             start = time.time()
             cls_task.predict(
                 data=predict_data, return_result=True, accelerate_mode=False)
-            print("%s ******************    predict time: %s" %
-                  (name, time.time() - start))
+            old_time = time.time() - start
+            print(
+                "%s ******************    predict time: %s" % (name, old_time))
 
             start = time.time()
             cls_task.predict(
                 data=predict_data, return_result=True, accelerate_mode=False)
-            print("%s ******************    accelerate time: %s" %
-                  (name, time.time() - start))
+            new_time = time.time() - start
+            print(
+                "%s ******************    accelerate time: %s, accelerate rate: %s"
+                % (name, new_time, (old_time - new_time) / old_time))
         except Exception as e:
             print(e)

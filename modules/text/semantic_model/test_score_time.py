@@ -41,13 +41,13 @@ class ENDataset(hub.dataset.GLUE):
 
 class CNDataset(hub.dataset.ChnSentiCorp):
     def get_train_examples(self):
-        return self.train_examples[:400]
+        return self.train_examples[:8000]
 
     def get_dev_examples(self):
-        return self.dev_examples[:50]
+        return self.dev_examples[:1000]
 
     def get_test_examples(self):
-        return self.test_examples[:50]
+        return self.test_examples[:1000]
 
 
 if __name__ == '__main__':
@@ -113,7 +113,7 @@ if __name__ == '__main__':
             if "L_12" in name or name in [
                     "ernie", "ernie_tiny", "ernie_v2_eng_base"
             ] or "distillation" in name:
-                batch_size = 24
+                batch_size = 16
             else:
                 batch_size = 8
 

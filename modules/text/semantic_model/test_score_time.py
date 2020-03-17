@@ -113,9 +113,9 @@ if __name__ == '__main__':
             if "L_12" in name or name in [
                     "ernie", "ernie_tiny", "ernie_v2_eng_base"
             ] or "distillation" in name:
-                batch_size = 48
+                batch_size = 24
             else:
-                batch_size = 16
+                batch_size = 8
 
             config = hub.RunConfig(
                 use_data_parallel=True,

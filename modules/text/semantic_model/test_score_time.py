@@ -24,6 +24,7 @@ import paddlehub as hub
 parser = argparse.ArgumentParser(__doc__)
 parser.add_argument("--learning_rate", type=float, default=5e-5, help="Learning rate used to train with warmup.")
 parser.add_argument("--max_seq_len", type=int, default=512, help="Number of words of the longest seqence.")
+parser.add_argument("--name", type=str, default="ernie_tiny", help="")
 args = parser.parse_args()
 # yapf: enable.
 
@@ -51,114 +52,93 @@ class CNDataset(hub.dataset.ChnSentiCorp):
 
 
 if __name__ == '__main__':
-    for name in [
-            "roberta_wwm_ext_chinese_L_12_H_768_A_12_distillation",
-            "roberta_wwm_ext_chinese_L_24_H_1024_A_16_distillation"
-            "bert_cased_L_12_H_768_A_12",
-            "bert_cased_L_24_H_1024_A_16",
-            "bert_chinese_L_12_H_768_A_12",
-            "bert_multi_cased_L_12_H_768_A_12",
-            "bert_multi_uncased_L_12_H_768_A_12",
-            "bert_uncased_L_12_H_768_A_12",
-            "bert_uncased_L_24_H_1024_A_16",
-            "bert_wwm_chinese_L_12_H_768_A_12",
-            "bert_wwm_ext_chinese_L_12_H_768_A_12",
-            "ernie",
-            "ernie_tiny",
-            "ernie_v2_eng_base",
-            "ernie_v2_eng_large",
-            "roberta_wwm_ext_chinese_L_12_H_768_A_12",
-            "roberta_wwm_ext_chinese_L_24_H_1024_A_16",
-            "roberta_wwm_ext_chinese_L_24_H_1024_A_16",
-    ]:
-        try:
-            module = hub.Module(
-                name=name.replace("L_12_H_768_A_12", "L-12_H-768_A-12").replace(
-                    "L_24_H_1024_A_16", "L-24_H-1024_A-16"))
-            inputs, outputs, program = module.context(
-                trainable=True, max_seq_len=args.max_seq_len)
+    name = args.name
+    try:
+        module = hub.Module(
+            name=name.replace("L_12_H_768_A_12", "L-12_H-768_A-12").replace(
+                "L_24_H_1024_A_16", "L-24_H-1024_A-16"))
+        inputs, outputs, program = module.context(
+            trainable=True, max_seq_len=args.max_seq_len)
 
-            if "chinese" in name or name in ["ernie", "ernie_tiny"]:
-                dataset = CNDataset()
-            else:
-                dataset = ENDataset()
+        if "chinese" in name or name in ["ernie", "ernie_tiny"]:
+            dataset = CNDataset()
+        else:
+            dataset = ENDataset()
 
-            metrics_choices = ["acc"]
-            reader = hub.reader.ClassifyReader(
-                dataset=dataset,
-                vocab_path=module.get_vocab_path(),
-                max_seq_len=args.max_seq_len,
-                sp_model_path=module.get_spm_path(),
-                word_dict_path=module.get_word_dict_path())
+        metrics_choices = ["acc"]
+        reader = hub.reader.ClassifyReader(
+            dataset=dataset,
+            vocab_path=module.get_vocab_path(),
+            max_seq_len=args.max_seq_len,
+            sp_model_path=module.get_spm_path(),
+            word_dict_path=module.get_word_dict_path())
 
-            # Construct transfer learning network
-            # Use "pooled_output" for classification tasks on an entire sentence.
-            # Use "sequence_output" for token-level output.
-            pooled_output = outputs["pooled_output"]
+        # Construct transfer learning network
+        # Use "pooled_output" for classification tasks on an entire sentence.
+        # Use "sequence_output" for token-level output.
+        pooled_output = outputs["pooled_output"]
 
-            # Setup feed list for data feeder
-            # Must feed all the tensor of module need
-            feed_list = [
-                inputs["input_ids"].name,
-                inputs["position_ids"].name,
-                inputs["segment_ids"].name,
-                inputs["input_mask"].name,
-            ]
+        # Setup feed list for data feeder
+        # Must feed all the tensor of module need
+        feed_list = [
+            inputs["input_ids"].name,
+            inputs["position_ids"].name,
+            inputs["segment_ids"].name,
+            inputs["input_mask"].name,
+        ]
 
-            # Select finetune strategy, setup config and finetune
-            strategy = hub.AdamWeightDecayStrategy(
-                learning_rate=args.learning_rate)
+        # Select finetune strategy, setup config and finetune
+        strategy = hub.AdamWeightDecayStrategy(learning_rate=args.learning_rate)
 
-            # Setup runing config for PaddleHub Finetune API
-            if "L_12" in name or name in [
-                    "ernie", "ernie_tiny", "ernie_v2_eng_base"
-            ] or "distillation" in name:
-                batch_size = 16
-            else:
-                batch_size = 8
+        # Setup runing config for PaddleHub Finetune API
+        if "L_12" in name or name in [
+                "ernie", "ernie_tiny", "ernie_v2_eng_base"
+        ] or "distillation" in name:
+            batch_size = 16
+        else:
+            batch_size = 8
 
-            config = hub.RunConfig(
-                use_data_parallel=True,
-                use_cuda=True,
-                num_epoch=2,
-                batch_size=batch_size,
-                checkpoint_dir="ckpt_%s" % name,
-                strategy=strategy,
-                eval_interval=100)
+        config = hub.RunConfig(
+            use_data_parallel=True,
+            use_cuda=True,
+            num_epoch=2,
+            batch_size=batch_size,
+            checkpoint_dir="ckpt_%s" % name,
+            strategy=strategy,
+            eval_interval=100)
 
-            # Define a classfication finetune task by PaddleHub's API
-            cls_task = hub.TextClassifierTask(
-                data_reader=reader,
-                feature=pooled_output,
-                feed_list=feed_list,
-                num_classes=dataset.num_labels,
-                config=config,
-                metrics_choices=metrics_choices)
+        # Define a classfication finetune task by PaddleHub's API
+        cls_task = hub.TextClassifierTask(
+            data_reader=reader,
+            feature=pooled_output,
+            feed_list=feed_list,
+            num_classes=dataset.num_labels,
+            config=config,
+            metrics_choices=metrics_choices)
 
-            # Finetune and evaluate by PaddleHub's API
-            # will finish training, evaluation, testing, save model automatically
+        # Finetune and evaluate by PaddleHub's API
+        # will finish training, evaluation, testing, save model automatically
 
-            start = time.time()
-            cls_task.finetune_and_eval()
-            print("%s ******************    finetune time: %s" %
-                  (name, time.time() - start))
+        start = time.time()
+        cls_task.finetune_and_eval()
+        print("%s ******************    finetune time: %s" %
+              (name, time.time() - start))
 
-            predict_data = [[example.text_a, example.text_b]
-                            for example in dataset.get_dev_examples()]
+        predict_data = [[example.text_a, example.text_b]
+                        for example in dataset.get_dev_examples()]
 
-            start = time.time()
-            cls_task.predict(
-                data=predict_data, return_result=True, accelerate_mode=False)
-            old_time = time.time() - start
-            print(
-                "%s ******************    predict time: %s" % (name, old_time))
+        start = time.time()
+        cls_task.predict(
+            data=predict_data, return_result=True, accelerate_mode=False)
+        old_time = time.time() - start
+        print("%s ******************    predict time: %s" % (name, old_time))
 
-            start = time.time()
-            cls_task.predict(
-                data=predict_data, return_result=True, accelerate_mode=False)
-            new_time = time.time() - start
-            print(
-                "%s ******************    accelerate time: %s, accelerate rate: %s"
-                % (name, new_time, (old_time - new_time) / old_time))
-        except Exception as e:
-            print(e)
+        start = time.time()
+        cls_task.predict(
+            data=predict_data, return_result=True, accelerate_mode=False)
+        new_time = time.time() - start
+        print(
+            "%s ******************    accelerate time: %s, accelerate rate: %s"
+            % (name, new_time, (old_time - new_time) / old_time))
+    except Exception as e:
+        print(e)

@@ -109,7 +109,7 @@ https://github.com/PaddlePaddle/ERNIE
 
 ## 依赖
 
-paddlepaddle >= 1.6.3
+paddlepaddle >= 1.6.2
 
 paddlehub >= 1.6.0
 

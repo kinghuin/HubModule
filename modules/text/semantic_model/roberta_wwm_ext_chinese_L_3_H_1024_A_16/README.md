@@ -1,5 +1,5 @@
 ```shell
-$ hub install roberta_wwm_ext_chinese_L-3_H-1024_A-16==1.1.0
+$ hub install roberta_wwm_ext_chinese_L-3_H-1024_A-16==1.0.0
 ```
 <p align="center">
 <img src="https://bj.bcebos.com/paddlehub/paddlehub-img/bert_network.png"  hspace='10'/> <br />
@@ -106,7 +106,7 @@ https://github.com/PaddlePaddle/ERNIE/tree/develop/BERT
 
 ## 依赖
 
-paddlepaddle >= 1.6.3
+paddlepaddle >= 1.6.2
 
 paddlehub >= 1.6.0
 
@@ -115,7 +115,3 @@ paddlehub >= 1.6.0
 * 1.0.0
 
   初始发布
-
-* 1.1.0
-
-  支持get_embedding与get_params_layer

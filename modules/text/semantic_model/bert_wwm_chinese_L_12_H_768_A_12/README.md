@@ -23,8 +23,7 @@ def context(
 
 **返回**  
 > inputs：dict类型，有以下字段：  
-> >**input_ids**存放输入文本tokenize后各token对应BERT词汇表的word ids， shape为\[batch_size, max_seq_len\]，int64类型；  
-> >**position_ids**存放输入文本tokenize后各token所在该文本的位置，shape为\[batch_size, max_seq_len\]，int64类型；  
+> >**position_ids**存放输入文本tokenize后各token所在该文本的位置，shape为\[batch_size, max_seq_len\]，int64类型；
 > >**segment_ids**存放各token所在文本的标识（token属于文本1或者文本2），shape为\[batch_size, max_seq_len\]，int64类型；  
 > >**input_mask**存放token是否为padding的标识，shape为\[batch_size, max_seq_len\]，int64类型；  
 >
@@ -106,7 +105,7 @@ https://github.com/PaddlePaddle/ERNIE/tree/develop/BERT
 
 ## 依赖
 
-paddlepaddle >= 1.6.3
+paddlepaddle >= 1.6.2
 
 paddlehub >= 1.6.0
 

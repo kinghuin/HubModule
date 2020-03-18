@@ -1,5 +1,5 @@
 ```shell
-$ hub install bert_multi_uncased_L-12_H-768_A-12==1.1.0
+$ hub install bert_multi_uncased_L-12_H-768_A-12==1.0.0
 ```
 <p align="center">
 <img src="https://bj.bcebos.com/paddlehub/paddlehub-img/bert_network.png"  hspace='10'/> <br />
@@ -100,7 +100,7 @@ https://github.com/PaddlePaddle/ERNIE/tree/develop/BERT
 
 ## 依赖
 
-paddlepaddle >= 1.6.3
+paddlepaddle >= 1.6.2
 
 paddlehub >= 1.6.0
 
@@ -110,7 +110,3 @@ paddlehub >= 1.6.0
 * 1.0.0
 
   初始发布
-
-* 1.1.0
-
-  支持get_embedding与get_params_layer

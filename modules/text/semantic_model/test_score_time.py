@@ -93,7 +93,7 @@ if __name__ == '__main__':
         # Setup runing config for PaddleHub Finetune API
         if "L_12" in name or name in [
                 "ernie", "ernie_tiny", "ernie_v2_eng_base"
-        ] or "distillation" in name:
+        ] or "L_3" in name:
             batch_size = 16
         else:
             batch_size = 8
@@ -135,7 +135,7 @@ if __name__ == '__main__':
 
         start = time.time()
         cls_task.predict(
-            data=predict_data, return_result=True, accelerate_mode=False)
+            data=predict_data, return_result=True, accelerate_mode=True)
         new_time = time.time() - start
         print(
             "%s ******************    accelerate time: %s, accelerate rate: %s"

@@ -1,5 +1,5 @@
 ```shell
-$ hub install roberta_wwm_ext_chinese_L-24_H-1024_A-16_distillation==1.1.0
+$ hub install roberta_wwm_ext_chinese_L-3_H-768_A-12==1.1.0
 ```
 <p align="center">
 <img src="https://bj.bcebos.com/paddlehub/paddlehub-img/bert_network.png"  hspace='10'/> <br />
@@ -39,11 +39,11 @@ def context(
 ```python
 import paddlehub as hub
 
-# Load $ hub install roberta_wwm_ext_chinese_L-24_H-1024_A-16_distillation pretrained model
-module = hub.Module(name="roberta_wwm_ext_chinese_L-24_H-1024_A-16_distillation")
+# Load $ hub install roberta_wwm_ext_chinese_L-3_H-768_A-12 pretrained model
+module = hub.Module(name="roberta_wwm_ext_chinese_L-3_H-768_A-12")
 inputs, outputs, program = module.context(trainable=True, max_seq_len=128)
 
-# Must feed all the tensor of roberta_wwm_ext_chinese_L-24_H-1024_A-16_distillation's module need
+# Must feed all the tensor of roberta_wwm_ext_chinese_L-3_H-768_A-12's module need
 input_ids = inputs["input_ids"]
 position_ids = inputs["position_ids"]
 segment_ids = inputs["segment_ids"]

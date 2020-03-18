@@ -124,21 +124,21 @@ if __name__ == '__main__':
         print("%s ******************    finetune time: %s" %
               (name, time.time() - start))
 
-        predict_data = [[example.text_a, example.text_b]
-                        for example in dataset.get_dev_examples()]
-
-        start = time.time()
-        cls_task.predict(
-            data=predict_data, return_result=True, accelerate_mode=False)
-        old_time = time.time() - start
-        print("%s ******************    predict time: %s" % (name, old_time))
-
-        start = time.time()
-        cls_task.predict(
-            data=predict_data, return_result=True, accelerate_mode=True)
-        new_time = time.time() - start
-        print(
-            "%s ******************    accelerate time: %s, accelerate rate: %s"
-            % (name, new_time, (old_time - new_time) / old_time))
+        # predict_data = [[example.text_a, example.text_b]
+        #                 for example in dataset.get_dev_examples()]
+        #
+        # start = time.time()
+        # cls_task.predict(
+        #     data=predict_data, return_result=True, accelerate_mode=False)
+        # old_time = time.time() - start
+        # print("%s ******************    predict time: %s" % (name, old_time))
+        #
+        # start = time.time()
+        # cls_task.predict(
+        #     data=predict_data, return_result=True, accelerate_mode=True)
+        # new_time = time.time() - start
+        # print(
+        #     "%s ******************    accelerate time: %s, accelerate rate: %s"
+        #     % (name, new_time, (old_time - new_time) / old_time))
     except Exception as e:
         print(e)

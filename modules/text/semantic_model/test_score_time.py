@@ -57,9 +57,9 @@ if __name__ == '__main__':
         if "L_3" in name or name == "bert_multi_uncased_L_12_H_768_A_12":
             version = "1.0.0"
         elif name == "ernie":
-            version = "1.1.0"
-        else:
             version = "1.2.0"
+        else:
+            version = "1.1.0"
         module = hub.Module(
             name=name.replace("L_12_H_768_A_12", "L-12_H-768_A-12").replace(
                 "L_24_H_1024_A_16", "L-24_H-1024_A-16"),

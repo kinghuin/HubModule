@@ -64,7 +64,7 @@ if __name__ == '__main__':
             name=name.replace("L_12_H_768_A_12", "L-12_H-768_A-12").replace(
                 "L_24_H_1024_A_16", "L-24_H-1024_A-16").replace(
                     "L_3_H_768_A_12", "L-3_H-768_A-12").replace(
-                        "L_3_H_1024_A_16", "L-3_H-1024_A-16"),
+                        "L_3_H_1024_A_16", "L-3:q_H-1024_A-16"),
             version=version)
         inputs, outputs, program = module.context(
             trainable=True, max_seq_len=args.max_seq_len)

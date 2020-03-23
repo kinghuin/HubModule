@@ -28,10 +28,9 @@ from rbtl3.model.bert import BertConfig, BertModel
 
 
 @moduleinfo(
-    name="roberta_wwm_ext_chinese_L-3_H-1024_A-16",
+    name="rbtl3",
     version="1.0.0",
-    summary=
-    "roberta_wwm_ext_chinese_L-3_H-1024_A-16, 3-layer, 1024-hidden, 16-heads, 61M parameters ",
+    summary="rbtl3, 3-layer, 1024-hidden, 16-heads, 61M parameters ",
     author="ymcui",
     author_email="ymcui@ir.hit.edu.cn",
     type="nlp/semantic_model",

@@ -44,7 +44,7 @@ class TestDataset(hub.dataset.ChnSentiCorp):
 
 
 if __name__ == '__main__':
-    module = hub.Module(name="roberta_wwm_ext_chinese_L-3_H-1024_A-16")
+    module = hub.Module(name="rbtl3")
     inputs, outputs, program = module.context(
         trainable=True, max_seq_len=args.max_seq_len)
 

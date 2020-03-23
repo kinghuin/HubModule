@@ -1,5 +1,5 @@
 ```shell
-$ hub install roberta_wwm_ext_chinese_L-3_H-1024_A-16==1.0.0
+$ hub install rbtl3==1.0.0
 ```
 <p align="center">
 <img src="https://bj.bcebos.com/paddlehub/paddlehub-img/bert_network.png"  hspace='10'/> <br />
@@ -75,11 +75,11 @@ def get_params_layer()
 ```python
 import paddlehub as hub
 
-# Load $ hub install roberta_wwm_ext_chinese_L-3_H-1024_A-16 pretrained model
-module = hub.Module(name="roberta_wwm_ext_chinese_L-3_H-1024_A-16")
+# Load $ hub install rbtl3 pretrained model
+module = hub.Module(name="rbtl3")
 inputs, outputs, program = module.context(trainable=True, max_seq_len=128)
 
-# Must feed all the tensor of roberta_wwm_ext_chinese_L-3_H-1024_A-16's module need
+# Must feed all the tensor of rbtl3's module need
 input_ids = inputs["input_ids"]
 position_ids = inputs["position_ids"]
 segment_ids = inputs["segment_ids"]

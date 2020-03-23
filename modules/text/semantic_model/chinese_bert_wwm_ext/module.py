@@ -71,9 +71,6 @@ class BertWwm(TransformerModule):
         sequence_output = bert.get_sequence_output()
         return pooled_output, sequence_output
 
-    def param_prefix(self):
-        return "@HUB_chinese-bert-wwm-ext_wwm_ext@"
-
 
 if __name__ == '__main__':
     test_module = BertWwm()

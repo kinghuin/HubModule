@@ -97,7 +97,6 @@ class Youtube8mMetrics(Metrics):
             all_res_list = []
             for index, item in enumerate(self.infer_results):
                 video_id = item[0]
-                # logger.info('========video_id [ {} ] , topk({}) preds: ========\n'.format(video_id, self.topk))
                 f = io.open(label_file, "r", encoding="utf-8")
                 fl = f.readlines()
                 res_list = {}
@@ -106,11 +105,11 @@ class Youtube8mMetrics(Metrics):
                     class_id = item[1][i]
                     class_prob = item[2][i]
                     class_name = fl[class_id].split('\n')[0]
-                    # print('class_id: {},'.format(class_id), 'class_name:', class_name,  ',  probability:  {} \n'.format(class_prob))
-                    # save_dict={class_name:class_prob}
                     res_list[class_name] = class_prob
                 # save infer result into output dir
                 if savedir:
+                    if not os.path.exists(savedir):
+                        os.makedirs(savedir)
                     with io.open(
                             os.path.join(savedir,
                                          'result' + str(index) + '.json'),

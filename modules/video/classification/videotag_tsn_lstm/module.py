@@ -89,7 +89,7 @@ class videoTag(hub.Module):
                        save_dir=None):
         argsv = [
             '--video_path', video_path, '--filelist', filelist, '--use_gpu',
-            use_gpu, '--save_dir', save_dir
+            str(use_gpu), '--save_dir', save_dir
         ]
         return self.run_cmd(argsv)
 
